@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package grpc;
+
+option go_package = https://github.com/dmoyan0/TareasSD/tree/main/proto
+
+message Item {
+
+}
+
+service RequestService {
+    rpc Create () returns ();
+    rpc Add() returns ();
+    rpc List () returns ();
+}
