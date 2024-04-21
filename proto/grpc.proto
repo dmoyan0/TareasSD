@@ -11,8 +11,8 @@ service WishListService {
 message Empty {}
 
 message MunitionInfoResponse {
-    int32 municion_at = 1;
-    int32 municion_mp = 2;
-    int32 max_at = 3;
-    int32 max_mp = 4;
+    int32 municionAT = 1;
+    int32 municionMP = 2;
+    int32 maxAT = 3;
+    int32 maxMP = 4;
 }
