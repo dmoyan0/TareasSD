@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"math/rand"
+	"sync"
 	"time"
 
 	pb "github.com/dmoyan0/TareasSD/tree/main/proto"
@@ -14,16 +15,8 @@ func randInt(min, max int) int {
 	return min + rand.Intn(max-min)
 }
 
-func main() {
-	//Conexión con servidor Tierra
-	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
-	//Error conexión
-	if err != nil {
-		panic("cannot connect with server " + err.Error())
-	}
-
+func Equipos(equipoID int, conn *grpc.ClientConn, wg *sync.WaitGroup) {
 	c := pb.NewWishListc(conn)
-	equipoID := 1
 
 	//Esperar 10 seg
 	time.Sleep(10 * time.Second)
@@ -47,7 +40,25 @@ func main() {
 				time.Sleep(3 * time.Second)
 			}
 		}
-
 	}
+	wg.Done()
+}
+
+func main() {
+	//Conexión con servidor Tierra
+	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
+	//Error conexión
+	if err != nil {
+		panic("cannot connect with server " + err.Error())
+	}
+
+	var wg sync.WaitGroup
+
+	for i := 0; i < 4; i++ {
+		wg.Add(1)
+		equipoID := i
+		go Equipos(equipoID, conn, &wg)
+	}
+	wg.Wait()
 
 }
