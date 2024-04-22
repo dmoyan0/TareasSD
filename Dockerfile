@@ -2,10 +2,6 @@
 ARG BASE_IMAGE=golang:1.21.3
 FROM ${BASE_IMAGE} AS builder
 
-ARG EARTH_PORT= 50051
-
-ARG SERVER_TYPE
-
 # Set the working directory inside the container
 WORKDIR /app
 
@@ -18,10 +14,15 @@ RUN go mod download
 # Copy the rest of your application code to the container
 COPY . .
 
+# Build the server
+RUN go build -o tierra
+
+# Define default value for SERVER_TYPE
+ARG SERVER_TYPE=tierra
+
+# Set up the command to run the server based on SERVER_TYPE
 CMD if [ "$SERVER_TYPE" = "tierra" ]; then \
-        cd /app; \
-        go build -o tierra; \
-        ./tierra-server; \
+        ./tierra; \
     else \
         echo "Invalid SERVER_TYPE argument."; \
     fi

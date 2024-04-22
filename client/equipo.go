@@ -7,6 +7,7 @@ import (
 	"sync"
 	"time"
 
+	pb "github.com/dmoyan0/TareasSD/tree/main/proto"
 	"google.golang.org/grpc"
 )
 
