@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package grpc;
 
-option go_package = https://github.com/dmoyan0/TareasSD/tree/main/proto
+option go_package = "github.com/dmoyan0/TareasSD/proto";
 
 service WishListService {
     rpc GetMunitionInfo(Empty) returns (MunitionInfoResponse);
